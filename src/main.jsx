@@ -14,16 +14,16 @@ export function App() {
       <nav
         style={{ padding: "1rem", textAlign: "center", background: "#4a90e2" }}
       >
-        {!isAuthenticated && (
-          <Link to="/" style={linkStyle}>
-            Termin buchen
-          </Link>
-        )}
-        {isAuthenticated && (
-          <Link to="/appointments" style={linkStyle}>
-            Login
-          </Link>
-        )}
+        
+        <Link to="/" style={linkStyle}>
+          Termin buchen
+        </Link>
+      
+      
+        <Link to="/appointments" style={linkStyle}>
+          Login
+        </Link>
+        
       </nav>
 
       <Routes>
