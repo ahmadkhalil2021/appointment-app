@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { RiRefreshLine } from "react-icons/ri";
+import { supabase } from "./supabase";
 
 const STORAGE_KEY = "appointments";
 
@@ -25,19 +26,25 @@ export default function AppointmentsPage() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
   };
 
-  const loadAppointments = () => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const appos = JSON.parse(saved);
-      appos.sort((a, b) => {
+  const loadAppointments =  async() => {
+    const {data, error} = await supabase
+          .from("appointments")
+          .select("*")
+    console.log("data" + data)
+    if (data) {
+      
+      data.sort((a, b) => {
         const dateA = new Date(`${a.date}T${a.time}`);
         const dateB = new Date(`${b.date}T${b.time}`);
         return dateA - dateB;
       });
-      setAppointments(appos);
-    } else {
+      setAppointments(data);
+    } 
+    if(error) {
       setAppointments([]);
     }
+    console.log(error)
+    console.log(data)
   };
 
   return (

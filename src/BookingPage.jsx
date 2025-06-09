@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { supabase } from "./supabase";
 
 const STORAGE_KEY = "appointments";
 
@@ -51,7 +52,7 @@ export default function BookingPage() {
     const selectedDate = new Date(formData.date);
     const day = selectedDate.getDay();
     if (day === 0 || day === 6) {
-      setError("Termine können nur an Wochentagen gebucht werden.");
+      setError("Termine können npm install @supabase/supabase-jsnur an Wochentagen gebucht werden.");
       setIsValid(false);
       return;
     }
@@ -108,7 +109,7 @@ export default function BookingPage() {
     setFormData((prev) => ({ ...prev, date: value, time: "" }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isValid) return;
 
@@ -117,6 +118,10 @@ export default function BookingPage() {
       id: Date.now(),
     };
 
+    await supabase.from("appointments").insert(
+      [newAppointment]
+    );
+    
     setAppointments((prev) => [...prev, newAppointment]);
     setLastName(formData.name);
     setFormData({
