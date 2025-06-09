@@ -1,7 +1,3 @@
 {
-  "builds": [
-    {
-      "src": "package.json"
-    }
-  ]
+  "$schema": "https://openapi.vercel.sh/vercel.json"
 }
