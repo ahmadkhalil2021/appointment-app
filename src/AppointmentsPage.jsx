@@ -2,49 +2,33 @@ import { useState, useEffect } from "react";
 import { RiRefreshLine } from "react-icons/ri";
 import { supabase } from "./supabase";
 
-const STORAGE_KEY = "appointments";
-
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const appos = JSON.parse(saved);
-      appos.sort((a, b) => {
-        const dateA = new Date(`${a.date}T${a.time}`);
-        const dateB = new Date(`${b.date}T${b.time}`);
-        return dateA - dateB;
-      });
-      setAppointments(appos);
-    }
+    loadAppointments();
   }, []);
 
-  const handleDelete = (id) => {
-    const filtered = appointments.filter((a) => a.id !== id);
-    setAppointments(filtered);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+  const handleDelete = async (id) => {
+    await supabase.from("appointments").delete().match({ id });
+    loadAppointments();
   };
 
-  const loadAppointments =  async() => {
-    const {data, error} = await supabase
-          .from("appointments")
-          .select("*")
-    console.log("data" + data)
+  const loadAppointments = async () => {
+    const { data, error } = await supabase.from("appointments").select("*");
     if (data) {
-      
       data.sort((a, b) => {
         const dateA = new Date(`${a.date}T${a.time}`);
         const dateB = new Date(`${b.date}T${b.time}`);
         return dateA - dateB;
       });
       setAppointments(data);
-    } 
-    if(error) {
+    }
+    if (error) {
       setAppointments([]);
     }
-    console.log(error)
-    console.log(data)
+    console.log(error);
+    console.log(data);
   };
 
   return (

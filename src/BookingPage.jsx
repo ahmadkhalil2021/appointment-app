@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./supabase";
 
-const STORAGE_KEY = "appointments";
-
 const generateTimeSlots = () => {
   const times = [];
   for (let h = 8; h <= 16; h++) {
@@ -27,19 +25,22 @@ export default function BookingPage() {
   const [lastName, setLastName] = useState("");
   const [error, setError] = useState("");
   const [isValid, setIsValid] = useState(false);
-
+  // Generiere Zeit-Slots von 08:00 bis 17:30
   const timeSlots = generateTimeSlots();
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      setAppointments(JSON.parse(saved));
-    }
+    const fetchData = async () => {
+      const { data, error } = await supabase.from("appointments").select("*");
+      if (data) {
+        setAppointments(JSON.stringify(data) === "[]" ? [] : data);
+      }
+      if (error) {
+        console.error("Fehler beim Laden der Termine:", error);
+        setAppointments([]);
+      }
+    };
+    fetchData();
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(appointments));
-  }, [appointments]);
 
   // Validation: Datum + Uhrzeit + Doppelbuchung + Wochenende + Zeitbereich 08:00-17:00
   useEffect(() => {
@@ -52,11 +53,12 @@ export default function BookingPage() {
     const selectedDate = new Date(formData.date);
     const day = selectedDate.getDay();
     if (day === 0 || day === 6) {
-      setError("Termine können npm install @supabase/supabase-jsnur an Wochentagen gebucht werden.");
+      setError(
+        "Termine können npm install @supabase/supabase-jsnur an Wochentagen gebucht werden."
+      );
       setIsValid(false);
       return;
     }
-
     if (!formData.time) {
       setIsValid(false);
       return;
@@ -77,9 +79,13 @@ export default function BookingPage() {
     }
 
     // Doppelbuchung prüfen
+    const normalizedTime =
+      formData.time.length === 5 ? formData.time + ":00" : formData.time;
+
     const alreadyBooked = appointments.some(
-      (a) => a.date === formData.date && a.time === formData.time
+      (a) => a.date === formData.date && a.time === normalizedTime
     );
+
     if (alreadyBooked) {
       setError("Dieser Termin ist bereits vergeben.");
       setIsValid(false);
@@ -118,10 +124,8 @@ export default function BookingPage() {
       id: Date.now(),
     };
 
-    await supabase.from("appointments").insert(
-      [newAppointment]
-    );
-    
+    await supabase.from("appointments").insert([newAppointment]);
+
     setAppointments((prev) => [...prev, newAppointment]);
     setLastName(formData.name);
     setFormData({
