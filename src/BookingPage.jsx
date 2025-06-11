@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./supabase";
+import ChatbotPopup from "./Chatbot";
 
 const generateTimeSlots = () => {
   const times = [];
@@ -249,6 +250,7 @@ export default function BookingPage() {
           Danke, <strong>{lastName}</strong>! Dein Termin wurde gebucht.
         </div>
       )}
+      <ChatbotPopup />
 
       <style jsx>{`
         .container {
@@ -265,6 +267,10 @@ export default function BookingPage() {
           color: red;
           font-weight: 600;
           margin-top: 0.8rem;
+        }
+        .chatbot-iframe {
+          height: 100%;
+          min-height: 700px;
         }
         h1 {
           text-align: center;

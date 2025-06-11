@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import BookingPage from "./BookingPage";
@@ -14,16 +14,13 @@ export function App() {
       <nav
         style={{ padding: "1rem", textAlign: "center", background: "#4a90e2" }}
       >
-        
         <Link to="/" style={linkStyle}>
           Termin buchen
         </Link>
-      
-      
+
         <Link to="/appointments" style={linkStyle}>
           Login
         </Link>
-        
       </nav>
 
       <Routes>
