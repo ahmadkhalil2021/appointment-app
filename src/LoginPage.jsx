@@ -32,7 +32,7 @@ export default function LoginPage({ onLogin }) {
 
       <style jsx>{`
         .login-container {
-          max-width: 400px;
+          max-width: 30%;
           margin: 5rem auto;
           padding: 2rem;
           background: #fff;

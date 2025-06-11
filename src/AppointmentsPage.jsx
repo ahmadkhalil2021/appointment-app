@@ -22,13 +22,18 @@ export default function AppointmentsPage() {
         const dateB = new Date(`${b.date}T${b.time}`);
         return dateA - dateB;
       });
-      setAppointments(data);
+      const now = new Date();
+      const updatedData = data.map((entry) => {
+        const dateTimeString = `${entry.date}T${entry.time}`;
+        const appointmentDate = new Date(dateTimeString);
+        const expired = appointmentDate < now;
+        return { ...entry, expired };
+      });
+      setAppointments(updatedData);
     }
     if (error) {
       setAppointments([]);
     }
-    console.log(error);
-    console.log(data);
   };
 
   return (
@@ -42,9 +47,13 @@ export default function AppointmentsPage() {
         <p className="no-appointments">Keine Termine gebucht.</p>
       ) : (
         <ul className="appointments-list">
-          {appointments.map(
-            ({ id, name, email, phone, date, time, message }) => (
-              <li key={id} className="appointment-item">
+          {appointments
+            .filter((entry) => !entry.expired)
+            .map(({ id, name, email, phone, date, time, message, expired }) => (
+              <li
+                key={id}
+                className={`appointment-item ${expired ? "expired" : ""}`}
+              >
                 <div className="header">
                   <strong>{name}</strong>
                   <span>
@@ -56,6 +65,10 @@ export default function AppointmentsPage() {
                   <span>Telefon: {phone}</span>
                 </div>
                 {message && <p className="message">{message}</p>}
+                <span
+                  className="button-status"
+                  style={{ backgroundColor: expired ? "red" : "green" }}
+                ></span>
                 <button
                   onClick={() => handleDelete(id)}
                   aria-label="Termin löschen"
@@ -79,14 +92,60 @@ export default function AppointmentsPage() {
                   </svg>
                 </button>
               </li>
-            )
-          )}
+            ))}
+          <h1>Abgelaufende Termine</h1>
+          {appointments
+            .filter((entry) => entry.expired)
+            .map(({ id, name, email, phone, date, time, message, expired }) => (
+              <li
+                key={id}
+                className={`appointment-item ${expired ? "expired" : ""}`}
+              >
+                <div className="header">
+                  <strong>{name}</strong>
+                  <span>
+                    {date} | {time}
+                  </span>
+                </div>
+                <div className="contact">
+                  <span>Email: {email}</span>
+                  <span>Telefon: {phone}</span>
+                </div>
+                {message && <p className="message">{message}</p>}
+                <span
+                  className="button-status"
+                  style={{ backgroundColor: expired ? "red" : "green" }}
+                ></span>
+                <button
+                  onClick={() => handleDelete(id)}
+                  aria-label="Termin löschen"
+                  title="Termin löschen"
+                  className="delete-button"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    width="20"
+                    height="20"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-4 0a1 1 0 00-1 1v1h6V4a1 1 0 00-1-1m-4 0h4"
+                    />
+                  </svg>
+                </button>
+              </li>
+            ))}
         </ul>
       )}
 
       <style jsx>{`
         .container {
-          max-width: 500px;
+          max-width: 30%;
           margin: 3rem auto;
           padding: 2rem 2.5rem;
           background: #ffffff;
@@ -94,6 +153,20 @@ export default function AppointmentsPage() {
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
           font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
           color: #2c3e50;
+        }
+        .expired {
+          color: gray;
+          text-decoration: line-through;
+          font-style: italic;
+        }
+        .button-status {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          margin-right: 8px;
+          cursor: pointer;
+          border: 2px solid rgba(0, 0, 0, 0.27);
         }
         .refresh-button {
           background-color: #3498db;

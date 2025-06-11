@@ -252,7 +252,7 @@ export default function BookingPage() {
 
       <style jsx>{`
         .container {
-          max-width: 480px;
+          max-width: 30%;
           margin: 3rem auto;
           padding: 2rem 2.5rem;
           background: #fff;
