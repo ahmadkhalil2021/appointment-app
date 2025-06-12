@@ -154,7 +154,9 @@ export default function BookingPage() {
       ...formData,
       id: Date.now(),
     };
-
+    if (newAppointment.message === "") {
+      newAppointment.message = "keine Nachricht";
+    }
     await supabase.from("appointments").insert([newAppointment]);
 
     setAppointments((prev) => [...prev, newAppointment]);
