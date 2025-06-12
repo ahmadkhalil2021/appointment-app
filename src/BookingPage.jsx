@@ -54,6 +54,7 @@ export default function BookingPage() {
     }
     const selectedDate = new Date(formData.date);
     const day = selectedDate.getDay();
+
     if (day === 0 || day === 6) {
       setError(
         "Termine können npm install @supabase/supabase-jsnur an Wochentagen gebucht werden."
@@ -88,6 +89,19 @@ export default function BookingPage() {
       (a) => a.date === formData.date && a.time === normalizedTime
     );
 
+    const nowDate = new Date();
+    const oneHourLater = new Date(nowDate.getTime() + 60 * 60 * 1000);
+    const date_is_past =
+      new Date(`${formData.date}T${formData.time}`) < nowDate ||
+      new Date(`${formData.date}T${formData.time}`) < oneHourLater;
+
+    if (date_is_past) {
+      setError(
+        "Dieser Termin liegt in der Vergangenheit oder eine Stunde später von jetzt."
+      );
+      setIsValid(false);
+      return;
+    }
     if (alreadyBooked) {
       setError("Dieser Termin ist bereits vergeben.");
       setIsValid(false);
