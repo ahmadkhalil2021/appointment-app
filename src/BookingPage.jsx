@@ -254,24 +254,17 @@ export default function BookingPage() {
 
       <style jsx>{`
         .container {
-          max-width: 30%;
+          width: 85%;
+          max-width: 600px;
           margin: 3rem auto;
-          padding: 2rem 2.5rem;
+          padding: 2rem 1.5rem;
           background: #fff;
           border-radius: 16px;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
           font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
           color: #2c3e50;
         }
-        .error-message {
-          color: red;
-          font-weight: 600;
-          margin-top: 0.8rem;
-        }
-        .chatbot-iframe {
-          height: 100%;
-          min-height: 700px;
-        }
+
         h1 {
           text-align: center;
           margin-bottom: 1.5rem;
@@ -297,15 +290,15 @@ export default function BookingPage() {
         input,
         select,
         textarea {
-          padding: 0.7rem 1rem;
+          padding: 0.75rem 1rem;
           border-radius: 12px;
           border: 1.8px solid #d0d7de;
           font-size: 1rem;
-          transition: border-color 0.25s ease;
           font-family: inherit;
           color: #2c3e50;
           background: #f9fafb;
           resize: vertical;
+          transition: border-color 0.25s ease, background 0.25s ease;
         }
 
         input::placeholder,
@@ -330,10 +323,11 @@ export default function BookingPage() {
         .row {
           display: flex;
           gap: 1rem;
+          flex-wrap: wrap;
         }
 
         .row label {
-          flex: 1;
+          flex: 1 1 100%;
         }
 
         button {
@@ -360,6 +354,12 @@ export default function BookingPage() {
           background: linear-gradient(90deg, #357abd 0%, #2a5f9e 100%);
         }
 
+        .error-message {
+          color: red;
+          font-weight: 600;
+          margin-top: 0.8rem;
+        }
+
         .success-message {
           background-color: #28a745;
           color: white;
@@ -371,9 +371,9 @@ export default function BookingPage() {
           box-shadow: 0 6px 20px #28a745aa;
         }
 
-        @media (max-width: 520px) {
-          .row {
-            flex-direction: column;
+        @media (min-width: 520px) {
+          .row label {
+            flex: 1 1 calc(50% - 0.5rem);
           }
         }
       `}</style>

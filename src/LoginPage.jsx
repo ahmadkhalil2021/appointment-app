@@ -32,7 +32,8 @@ export default function LoginPage({ onLogin }) {
 
       <style jsx>{`
         .login-container {
-          max-width: 30%;
+          width: 85%;
+          max-width: 600px;
           margin: 5rem auto;
           padding: 2rem;
           background: #fff;
@@ -48,21 +49,36 @@ export default function LoginPage({ onLogin }) {
           margin: 1rem 0;
           border: 1px solid #ccc;
           border-radius: 10px;
+          font-size: 1rem;
         }
 
         button {
-          padding: 0.7rem 1.5rem;
+          width: 100%;
+          padding: 0.8rem;
           border: none;
           background: #4a90e2;
           color: white;
           font-weight: 700;
           border-radius: 10px;
           cursor: pointer;
+          font-size: 1rem;
         }
 
         .error {
           color: red;
           margin-top: 0.5rem;
+        }
+
+        @media (max-width: 400px) {
+          .login-container {
+            padding: 1.5rem;
+            margin: 3rem auto;
+          }
+
+          input,
+          button {
+            font-size: 1rem;
+          }
         }
       `}</style>
     </div>

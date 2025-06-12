@@ -38,10 +38,10 @@ export default function AppointmentsPage() {
 
   return (
     <div className="container">
-      <h1>Gebuchte Termine</h1>
       <button className="refresh-button" onClick={loadAppointments}>
         <RiRefreshLine />
       </button>
+      <h1>Gebuchte Termine</h1>
 
       {appointments.length === 0 ? (
         <p className="no-appointments">Keine Termine gebucht.</p>
@@ -145,29 +145,17 @@ export default function AppointmentsPage() {
 
       <style jsx>{`
         .container {
-          max-width: 30%;
-          margin: 3rem auto;
-          padding: 2rem 2.5rem;
+          width: 85%;
+          max-width: 600px;
+          margin: 2rem auto;
+          padding: 1.5rem;
           background: #ffffff;
           border-radius: 16px;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
           font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
           color: #2c3e50;
         }
-        .expired {
-          color: gray;
-          text-decoration: line-through;
-          font-style: italic;
-        }
-        .button-status {
-          display: inline-block;
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          margin-right: 8px;
-          cursor: pointer;
-          border: 2px solid rgba(0, 0, 0, 0.27);
-        }
+
         .refresh-button {
           background-color: #3498db;
           color: white;
@@ -176,35 +164,18 @@ export default function AppointmentsPage() {
           border-radius: 8px;
           cursor: pointer;
           margin-bottom: 1rem;
-          display: block;
-          margin-left: 90%;
-          margin-right: auto;
+          float: right;
         }
 
         .refresh-button:hover {
           background-color: #2980b9;
-        }
-        .delete-button {
-          background: transparent;
-          border: none;
-          color: #e74c3c;
-          cursor: pointer;
-          padding: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: color 0.3s ease;
-          margin-left: 438px;
-        }
-
-        .delete-button:hover {
-          color: #c0392b;
         }
 
         h1 {
           text-align: center;
           color: #34495e;
           margin-bottom: 1.5rem;
+          clear: both;
         }
 
         .no-appointments {
@@ -216,46 +187,109 @@ export default function AppointmentsPage() {
         .appointments-list {
           list-style: none;
           padding: 0;
-          max-height: 320px;
-          overflow-y: auto;
+          margin: 0;
           border-top: 2px solid #4a90e2;
           border-radius: 12px;
-          max-height: 100%;
         }
 
         .appointment-item {
-          padding: 1rem 1.25rem;
+          padding: 1rem;
           border-bottom: 1px solid #e1e4e8;
           background: #f7f9fc;
-          transition: background 0.25s ease;
           border-radius: 0 0 12px 12px;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
         }
+
         .appointment-item:hover {
           background: #e9f0ff;
         }
 
-        .appointment-item .header {
+        .header {
           display: flex;
-          justify-content: space-between;
-          font-weight: 700;
-          font-size: 1.05rem;
-          color: #2c3e50;
-          margin-bottom: 0.3rem;
+          flex-direction: column;
+          gap: 0.2rem;
         }
 
-        .appointment-item .contact {
-          font-size: 0.875rem;
+        .header strong {
+          font-size: 1.1rem;
+        }
+
+        .header span {
+          font-size: 0.9rem;
+          color: #555;
+        }
+
+        .contact {
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+          font-size: 0.85rem;
           color: #566573;
-          display: flex;
-          gap: 1.2rem;
-          margin-bottom: 0.5rem;
         }
 
-        .appointment-item .message {
+        .message {
           font-style: italic;
           color: #34495e;
           font-size: 0.9rem;
-          padding-left: 0.25rem;
+        }
+
+        .expired {
+          color: gray;
+          text-decoration: line-through;
+          font-style: italic;
+        }
+
+        .button-status {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          border: 2px solid rgba(0, 0, 0, 0.27);
+        }
+
+        .delete-button {
+          background: transparent;
+          border: none;
+          color: #e74c3c;
+          cursor: pointer;
+          padding: 0;
+          width: fit-content;
+          display: flex;
+          align-items: center;
+          transition: color 0.3s ease;
+          align-self: flex-end;
+        }
+
+        .delete-button:hover {
+          color: #c0392b;
+        }
+
+        /* Tablet & up */
+        @media (min-width: 600px) {
+          .appointment-item {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+          }
+
+          .header {
+            flex: 1 1 40%;
+          }
+
+          .contact {
+            flex: 1 1 40%;
+          }
+
+          .message {
+            flex: 1 1 100%;
+          }
+
+          .delete-button {
+            margin-left: auto;
+            margin-top: 0;
+          }
         }
       `}</style>
     </div>
