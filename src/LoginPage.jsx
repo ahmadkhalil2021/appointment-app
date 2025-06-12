@@ -44,7 +44,7 @@ export default function LoginPage({ onLogin }) {
         }
 
         input {
-          width: 100%;
+          width: 95.5%;
           padding: 0.75rem;
           margin: 1rem 0;
           border: 1px solid #ccc;
