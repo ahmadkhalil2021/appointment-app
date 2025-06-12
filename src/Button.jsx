@@ -1,6 +1,6 @@
 import { useReward } from "partycles";
 
-function Button({ children, className = "" }) {
+function Button({ children, className = "", onClick, disabled }) {
   const { reward } = useReward("rewardId", "confetti", {
     particleCount: 100,
     spread: 120,
@@ -10,9 +10,19 @@ function Button({ children, className = "" }) {
       wind: 0.1,
     },
   });
+  const handleClick = (e) => {
+    if (disabled) return; // Verhindere Klicks, wenn der Button deaktiviert ist
+    reward(); // Starte Konfetti
+    onClick?.(e); // Rufe optional den übergebenen onClick-Handler auf
+  };
 
   return (
-    <button id="rewardId" onClick={reward} className={className}>
+    <button
+      id="rewardId"
+      onClick={handleClick}
+      className={className}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./supabase";
+import validator from "validator";
 import ChatbotPopup from "./Chatbot";
 import Button from "./Button";
 
@@ -47,11 +48,17 @@ export default function BookingPage() {
   // Validation: Datum + Uhrzeit + Doppelbuchung + Wochenende + Zeitbereich 08:00-17:00
   useEffect(() => {
     setError("");
-
-    if (!formData.date) {
+    if (
+      !formData.date ||
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.time
+    ) {
       setIsValid(false);
       return;
     }
+
     const selectedDate = new Date(formData.date);
     const day = selectedDate.getDay();
 
@@ -59,10 +66,6 @@ export default function BookingPage() {
       setError(
         "Termine können npm install @supabase/supabase-jsnur an Wochentagen gebucht werden."
       );
-      setIsValid(false);
-      return;
-    }
-    if (!formData.time) {
       setIsValid(false);
       return;
     }
@@ -107,10 +110,22 @@ export default function BookingPage() {
       setIsValid(false);
       return;
     }
+    if (!validator.isEmail(formData.email)) {
+      setError("Bitte eine gültige E-Mail-Adresse eingeben.");
+      setIsValid(false);
+      return;
+    }
 
     setError("");
     setIsValid(true);
-  }, [formData.date, formData.time, appointments]);
+  }, [
+    formData.date,
+    formData.time,
+    appointments,
+    formData.name,
+    formData.email,
+    formData.phone,
+  ]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));

@@ -156,7 +156,6 @@ export default function AppointmentsPage() {
           font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
           color: #2c3e50;
         }
-
         .refresh-button {
           background-color: #3498db;
           color: white;
@@ -167,24 +166,20 @@ export default function AppointmentsPage() {
           margin-bottom: 1rem;
           float: right;
         }
-
         .refresh-button:hover {
           background-color: #2980b9;
         }
-
         h1 {
           text-align: center;
           color: #34495e;
           margin-bottom: 1.5rem;
           clear: both;
         }
-
         .no-appointments {
           font-style: italic;
           text-align: center;
           color: #7f8c8d;
         }
-
         .appointments-list {
           list-style: none;
           padding: 0;
@@ -192,7 +187,6 @@ export default function AppointmentsPage() {
           border-top: 2px solid #4a90e2;
           border-radius: 12px;
         }
-
         .appointment-item {
           padding: 1rem;
           border-bottom: 1px solid #e1e4e8;
@@ -202,26 +196,21 @@ export default function AppointmentsPage() {
           flex-direction: column;
           gap: 0.5rem;
         }
-
         .appointment-item:hover {
           background: #e9f0ff;
         }
-
         .header {
           display: flex;
           flex-direction: column;
           gap: 0.2rem;
         }
-
         .header strong {
           font-size: 1.1rem;
         }
-
         .header span {
           font-size: 0.9rem;
           color: #555;
         }
-
         .contact {
           display: flex;
           flex-direction: column;
@@ -241,7 +230,6 @@ export default function AppointmentsPage() {
           text-decoration: line-through;
           font-style: italic;
         }
-
         .button-status {
           width: 10px;
           height: 10px;
