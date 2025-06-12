@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 export default function LoginPage({ onLogin }) {
   const [password, setPassword] = useState("");
@@ -26,7 +27,7 @@ export default function LoginPage({ onLogin }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Einloggen</button>
+        <Button type="submit">Einloggen</Button>
         {error && <p className="error">{error}</p>}
       </form>
 

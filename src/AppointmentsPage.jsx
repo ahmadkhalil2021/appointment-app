@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { RiRefreshLine } from "react-icons/ri";
 import { supabase } from "./supabase";
+import Button from "./Button";
 
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
@@ -38,9 +39,9 @@ export default function AppointmentsPage() {
 
   return (
     <div className="container">
-      <button className="refresh-button" onClick={loadAppointments}>
+      <Button className="refresh-button" onClick={loadAppointments}>
         <RiRefreshLine />
-      </button>
+      </Button>
       <h1>Gebuchte Termine</h1>
 
       {appointments.length === 0 ? (

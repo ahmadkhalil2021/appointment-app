@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./supabase";
 import ChatbotPopup from "./Chatbot";
+import Button from "./Button";
 
 const generateTimeSlots = () => {
   const times = [];
@@ -238,9 +239,9 @@ export default function BookingPage() {
           />
         </label>
 
-        <button type="submit" disabled={!isValid}>
+        <Button type="submit" disabled={!isValid}>
           Termin buchen
-        </button>
+        </Button>
 
         {error && <p className="error-message">{error}</p>}
       </form>
